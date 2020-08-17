@@ -24,7 +24,4 @@ class Employee {
 
 };
 
-const employee1 = new Employee("Sue", 354, email);
-console.log(employee1);
-
 module.exports = Employee;
