@@ -9,6 +9,7 @@ const OUTPUT_DIR = path.resolve(__dirname, "output");
 const outputPath = path.join(OUTPUT_DIR, "team.html");
 
 const render = require("./lib/htmlRenderer");
+// const writeFileAsync = util.promisify(fs.writeFile);        //not sure about this?
 
 
 function promptUser() {
@@ -34,7 +35,13 @@ function promptUser() {
                 name: "role",
                 message: "What is your role",
                 choices: ["manager", "engineer", "intern"]
-            }
+            },
+            {
+                type: "input",
+                name: "otherEmployee",
+                message: "Do you have other employees to add?"
+            },
+
         ]).then(response => {
             return response
             let name = response.name;
@@ -46,18 +53,34 @@ function promptUser() {
                 prompt("What is your office number?");
             } else if (role === engineer) {
                 prompt("What is your github address?");
-            } else (role === intern) 
-                prompt("What is your school?");
-            
+            } else (role === intern)
+            prompt("What is your school?");
+
 
             let officeNumber = response.officeNumber;
             let github = response.github;
             let school = response.school;
 
+            if (otherEmployee == true) {
+                promptUser();
+            } else {
+                print
+            }
         });
-        promptUser();
 
 }
+async function init() {
+    try {
+        const answers = await promptUser();
+        const employees = response(answers);
+        // await writeFileAsync("./output/team.html", txt);        //not sure about this? 
+        await render("./output/team.html", employee['']); 
+    } catch (err) {
+        console.log(err);
+    }
+}
+
+init();
 
 
 // Write code to use inquirer to gather information about the development team members,
