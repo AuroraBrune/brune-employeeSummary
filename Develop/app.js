@@ -9,77 +9,113 @@ const OUTPUT_DIR = path.resolve(__dirname, "output");
 const outputPath = path.join(OUTPUT_DIR, "team.html");
 
 const render = require("./lib/htmlRenderer");
-// const writeFileAsync = util.promisify(fs.writeFile);        //not sure about this?
-
-
-function promptUser() {
-    inquirer
-        .prompt([
-            {
-                type: "input",
-                name: "name",
-                message: "What is your name?"
-            },
-            {
-                type: "input",
-                name: "id",
-                message: "What is your employee id number?"
-            },
-            {
-                type: "email",
-                name: "email",
-                message: "What is your email address?"
-            },
-            {
-                type: "list",
-                name: "role",
-                message: "What is your role",
-                choices: ["manager", "engineer", "intern"]
-            },
-            {
-                type: "input",
-                name: "otherEmployee",
-                message: "Do you have other employees to add?"
-            },
-
-        ]).then(response => {
-            return response
-            let name = response.name;
-            let id = response.id;
-            let email = response.email;
-            let role = response.role;
-
-            if (role === manager) {
-                prompt("What is your office number?");
-            } else if (role === engineer) {
-                prompt("What is your github address?");
-            } else (role === intern)
-            prompt("What is your school?");
-
-
-            let officeNumber = response.officeNumber;
-            let github = response.github;
-            let school = response.school;
-
-            if (otherEmployee == true) {
-                promptUser();
-            } else {
-                print
-            }
-        });
-
-}
 async function init() {
-    try {
-        const answers = await promptUser();
-        const employees = response(answers);
-        // await writeFileAsync("./output/team.html", txt);        //not sure about this? 
-        await render("./output/team.html", employee['']); 
-    } catch (err) {
-        console.log(err);
-    }
-}
+    const teamMembers = [];
+    await inquirer.prompt([
+        {
+            type: "input",
+            name: "name",
+            message: "What is employee name?"
+        },
+        {
+            type: "input",
+            name: "id",
+            message: "What is employee id number?"
+        },
+        {
+            type: "email",
+            name: "email",
+            message: "What is employee email address?"
+        },
+        {
+            type: "list",
+            name: "role",
+            message: "What is employee role",
+            choices: ["manager", "engineer", "intern"]
+        },
+        {
+            type: "input",
+            name: "officeNumber",
+            message: "What is manager's office number?",
+            when: (answers) => answers.role === "manager"
+        },
+        {
+            type: "input",
+            name: "github",
+            message: "What is engineer's GitHub name?",
+            when: (answers) => answers.role === "engineer"
+        },
+        {
+            type: "input",
+            name: "school",
+            message: "What is intern's school?",
+            when: (answers) => answers.role === "intern"
+        }
 
+    ]).then(response => {
+        try {
+            name = response.name;
+            id = response.id;
+            email = response.email;
+            role = response.role;
+
+            switch (role) {
+                case "manager": officeNumber = response.officeNumber;
+                    const manager = new Manager(
+                        name,
+                        id,
+                        email,
+                        response.officeNumber
+                    );
+                    teamMembers.push(manager);
+                    console.log(manager);
+                    break;
+                case "engineer": github = response.github;
+                    const engineer = new Engineer(
+                        name,
+                        id,
+                        email,
+                        response.github
+                    );
+                    teamMembers.push(engineer);
+                    console.log(engineer);
+                    break;
+                case "intern": school = response.school;
+                    const intern = new Intern(
+                        name,
+                        id,
+                        email,
+                        response.school
+                    );
+                    teamMembers.push(intern);
+                    console.log(intern);
+                    break;
+            }
+
+        }
+        catch (err) {
+            console.log(err);
+        }
+        newEmployees();
+    })
+
+    function newEmployees() {
+        inquirer.prompt("Are there any more employees to add?")
+        if (true) {
+            promptUser();
+        }
+        renderhtml();
+    }
+    console.log(teamMembers);
+
+}
+function renderhtml() {
+
+    promptUser();
+    fs.writeFileSync(outputPath, render(teamMembers), "utf-8");
+
+
+}
 init();
 
 
