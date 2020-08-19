@@ -7,137 +7,132 @@ const fs = require("fs");
 
 const OUTPUT_DIR = path.resolve(__dirname, "output");
 const outputPath = path.join(OUTPUT_DIR, "team.html");
+//code to prompt user about employee's information
 
+const teamMembers = [];
 const render = require("./lib/htmlRenderer");
 async function init() {
-    const teamMembers = [];
-    await inquirer.prompt([
+    //ask teamSize to determine the number of employees in the team
+    let teamSize;
+    await inquirer.prompt(
         {
-            type: "input",
-            name: "name",
-            message: "What is employee name?"
-        },
-        {
-            type: "input",
-            name: "id",
-            message: "What is employee id number?"
-        },
-        {
-            type: "email",
-            name: "email",
-            message: "What is employee email address?"
-        },
-        {
-            type: "list",
-            name: "role",
-            message: "What is employee role",
-            choices: ["manager", "engineer", "intern"]
-        },
-        {
-            type: "input",
-            name: "officeNumber",
-            message: "What is manager's office number?",
-            when: (answers) => answers.role === "manager"
-        },
-        {
-            type: "input",
-            name: "github",
-            message: "What is engineer's GitHub name?",
-            when: (answers) => answers.role === "engineer"
-        },
-        {
-            type: "input",
-            name: "school",
-            message: "What is intern's school?",
-            when: (answers) => answers.role === "intern"
+            type: "number",
+            name: "teamSize",
+            message: ("How many team members on your project?")
         }
+    )
 
-    ]).then(response => {
-        try {
-            name = response.name;
-            id = response.id;
-            email = response.email;
-            role = response.role;
+        .then(answers => {
+            teamSize = answers.teamSize;
+        })
+    //prompt number of times of team size
+    for (i = 1; i <= teamSize; i++) {
+        let name;
+        let id;
+        let role;
+        let email;
 
-            switch (role) {
-                case "manager": officeNumber = response.officeNumber;
-                    const manager = new Manager(
-                        name,
-                        id,
-                        email,
-                        response.officeNumber
-                    );
-                    teamMembers.push(manager);
-                    console.log(manager);
-                    break;
-                case "engineer": github = response.github;
-                    const engineer = new Engineer(
-                        name,
-                        id,
-                        email,
-                        response.github
-                    );
-                    teamMembers.push(engineer);
-                    console.log(engineer);
-                    break;
-                case "intern": school = response.school;
-                    const intern = new Intern(
-                        name,
-                        id,
-                        email,
-                        response.school
-                    );
-                    teamMembers.push(intern);
-                    console.log(intern);
-                    break;
+        //prompt employee data for each team member
+        await inquirer.prompt([
+            {
+                type: "input",
+                name: "name",
+                message: `What is the name of team member number (${i})?`
+            },
+            {
+                type: "input",
+                name: "id",
+                message: `What is the id of team member number (${i})?`
+            },
+            {
+                type: "email",
+                name: "email",
+                message: `What is the email address of team member number (${i})?`
+            },
+            {
+                type: "list",
+                name: "role",
+                message: `What is the role of team member number (${i})?`,
+                choices: ["manager", "engineer", "intern"]
+            },
+            //manager, engineer and intern need different data, so ask per employee role
+            {
+                type: "input",
+                name: "officeNumber",
+                message: "What is manager's office number?",
+                when: (answers) => answers.role === "manager"
+            },
+            {
+                type: "input",
+                name: "github",
+                message: "What is engineer's GitHub name?",
+                when: (answers) => answers.role === "engineer"
+            },
+            {
+                type: "input",
+                name: "school",
+                message: "What is intern's school?",
+                when: (answers) => answers.role === "intern"
             }
 
-        }
-        catch (err) {
-            console.log(err);
-        }
-        newEmployees();
-    })
+        ]).then(response => {
+            try {
+                //take response data and build the team members with their roles  
+                id = response.id;
+                name = response.name;
+                email = response.email;
+                role = response.role;
 
-    function newEmployees() {
-        inquirer.prompt("Are there any more employees to add?")
-        if (true) {
-            promptUser();
-        }
-        renderhtml();
+                switch (role) {
+                    case "manager": officeNumber = response.officeNumber;
+                        const manager = new Manager(
+                            id,
+                            name,
+                            email,
+                            response.officeNumber
+                        );
+                        teamMembers.push(manager);
+                        console.log(manager);
+                        renderhtml();
+                        break;
+                    case "engineer": github = response.github;
+                        const engineer = new Engineer(
+                            id,
+                            name,
+                            email,
+                            response.github
+                        );
+                        teamMembers.push(engineer);
+                        console.log(engineer);
+                        renderhtml();
+                        break;
+                    case "intern": school = response.school;
+                        const intern = new Intern(
+                            id,
+                            name,
+                            email,
+                            response.school
+                        );
+                        teamMembers.push(intern);
+                        console.log(intern);
+                        renderhtml();
+                        break;
+                }
+
+            }
+            catch (err) {
+                console.log(err);
+            }
+        })
+
+        console.log(teamMembers);
     }
-    console.log(teamMembers);
-
 }
 function renderhtml() {
 
-    promptUser();
     fs.writeFileSync(outputPath, render(teamMembers), "utf-8");
 
-
-}
+} //initiate the function to build the team with the user prompts
 init();
 
 
-// Write code to use inquirer to gather information about the development team members,
-// and to create objects for each team member (using the correct classes as blueprints!)
-
-// After the user has input all employees desired, call the `render` function (required
-// above) and pass in an array containing all employee objects; the `render` function will
-// generate and return a block of HTML including templated divs for each employee!
-
-// After you have your html, you're now ready to create an HTML file using the HTML
-// returned from the `render` function. Now write it to a file named `team.html` in the
-// `output` folder. You can use the variable `outputPath` above target this location.
-// Hint: you may need to check if the `output` folder exists and create it if it
-// does not.
-
-// HINT: each employee type (manager, engineer, or intern) has slightly different
-// information; write your code to ask different questions via inquirer depending on
-// employee type.
-
-// HINT: make sure to build out your classes first! Remember that your Manager, Engineer,
-// and Intern classes should all extend from a class named Employee; see the directions
-// for further information. Be sure to test out each class and verify it generates an
-// object with the correct structure and methods. This structure will be crucial in order
-// for the provided `render` function to work! ```
