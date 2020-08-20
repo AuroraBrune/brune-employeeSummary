@@ -25,7 +25,7 @@ async function init() {
         .then(answers => {
             teamSize = answers.teamSize;
         })
-    //prompt number of times of team size
+    //prompt number for employee information for each member in the  team size
     for (i = 1; i <= teamSize; i++) {
         let name;
         let id;
