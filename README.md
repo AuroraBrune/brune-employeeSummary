@@ -175,6 +175,9 @@ You are required to submit the following:
 © 2019 Trilogy Education Services, a 2U, Inc. brand. All Rights Reserved.
 
 ----------
+![My Team](./Assets/myteam2.jpg)
+
+-----------
 My Team Screenshot
 
 ![My Team](./Assets/myTeamScreenshot.jpg)
@@ -184,4 +187,4 @@ screenshot of array and objects being constructed
 ![My Team](./Assets/MyTeambuildingArrayObjects.jpg)
 
 ![Screencastify
-](<iframe src="https://drive.google.com/file/d/1NAr0C9xk-GNuAAEQ0VryIFjSEXP_0eud/preview" width="640" height="480"></iframe>)
+](<iframe src="https://drive.google.com/file/d/1fceZFVLxP6fi-QjrWBK6RU2QeW8wfvAM/view"></iframe>)
