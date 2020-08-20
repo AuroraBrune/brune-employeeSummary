@@ -86,8 +86,9 @@ async function init() {
                 switch (role) {
                     case "manager": officeNumber = response.officeNumber;
                         const manager = new Manager(
-                            id,
+                           
                             name,
+                            id,
                             email,
                             response.officeNumber
                         );
@@ -97,8 +98,9 @@ async function init() {
                         break;
                     case "engineer": github = response.github;
                         const engineer = new Engineer(
-                            id,
+                            
                             name,
+                            id,
                             email,
                             response.github
                         );
@@ -108,8 +110,9 @@ async function init() {
                         break;
                     case "intern": school = response.school;
                         const intern = new Intern(
-                            id,
+                            
                             name,
+                            id,
                             email,
                             response.school
                         );
