@@ -181,7 +181,7 @@ My Team Screenshot
 -------
 screenshot of array and objects being constructed
 
-![My Team](./Assets/homework10ArrayObjectsCreated.jpg)
+![My Team](./Assets/MyTeambuildingArrayObjects.jpg)
 
 ![Screencastify
 ](<iframe src="https://drive.google.com/file/d/1NAr0C9xk-GNuAAEQ0VryIFjSEXP_0eud/preview" width="640" height="480"></iframe>)
