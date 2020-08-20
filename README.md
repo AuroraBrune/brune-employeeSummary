@@ -188,3 +188,7 @@ screenshot of array and objects being constructed
 
 ![Screencastify
 ](<iframe src="https://drive.google.com/file/d/1fceZFVLxP6fi-QjrWBK6RU2QeW8wfvAM/view"></iframe>)
+
+---------
+Deployed page 
+   https://aurorabrune.github.io/brune-employeeSummary/
