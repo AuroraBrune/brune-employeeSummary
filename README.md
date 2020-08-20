@@ -20,7 +20,7 @@ How do you deliver this? Here are some guidelines:
 * Your app will run as a Node CLI to gather information about each employee.
 
 * Below is an example of what your application may look like. Remember, the styling is completely up to you so try to make it unique.
-
+Sample pictures of how site can look. 
 ![Employee Summary 1](./Assets/10-OOP-homework-demo-1.png)
 ![Employee Summary 2](./Assets/10-OOP-homework-demo-2.png)
 
